@@ -10,7 +10,14 @@ import SwiftUI
 struct HomeView: View {
     var body: some View {
         NavigationStack{
-            HeaderView()
+            VStack{
+                HeaderView()
+                    .zIndex(1)
+                Spacer()
+                ContentView()
+                Spacer()
+                Spacer()
+            }
         }
     }
 }
