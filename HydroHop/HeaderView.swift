@@ -12,82 +12,88 @@ struct HeaderView: View {
 
     var body: some View {
         VStack(spacing: 10) {
-            // Header
-            HStack {
-                // Toggle Calendar Picker Button
-                Button(action: {
-                    withAnimation {
-                        showCalendar.toggle()
+            VStack(spacing: 10) {
+                // Header
+                HStack {
+                    Button(action: {
+                        withAnimation {
+                            showCalendar.toggle()
+                        }
+                    }) {
+                        Image(systemName: "chevron.down")
+                            .font(.system(size: 17, weight: .medium))
+                            .rotationEffect(.degrees(showCalendar ? 180 : 0))
+                            .animation(.easeInOut(duration: 0.2), value: showCalendar)
                     }
-                }) {
-                    Image(systemName: "chevron.down")
-                        .font(.system(size: 17, weight: .medium))
-                        .rotationEffect(.degrees(showCalendar ? 180 : 0))
-                        .animation(.easeInOut(duration: 0.2), value: showCalendar)
+                    .foregroundColor(.primary)
+
+                    Spacer()
+
+                    HStack(spacing: 0) {
+                        Text(getWeekday(from: selectedDate))
+                            .font(.system(size: 17, weight: .semibold))
+                        Text(" \(getMonthDay(from: selectedDate))")
+                            .foregroundColor(.gray)
+                    }
+
+                    Spacer()
+
+                    NavigationLink(destination: SettingsView()) {
+                        Image(systemName: "gear")
+                            .font(.system(size: 17))
+                    }
                 }
-                .foregroundColor(.primary)
+                .padding(.horizontal)
+                .padding(.top)
 
-                Spacer()
-
-                // Date in center
-                HStack(spacing: 0) {
-                    Text(getWeekday(from: selectedDate))
-                        .font(.system(size: 17, weight: .semibold))
-                    Text(" \(getMonthDay(from: selectedDate))")
-                        .foregroundColor(.gray)
-                }
-
-                Spacer()
-                NavigationLink(destination: SettingsView()) {
-                    Image(systemName: "gear")
-                        .font(.system(size: 17))
-                }
-
-            }
-            .padding(.horizontal)
-            .padding(.top)
-            HStack{
-                Spacer()
-                // Week Strip
-                if !showCalendar {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 15) {
-                            ForEach(currentWeekDates(), id: \.self) { date in
-                                VStack {
-                                    Text(getShortWeekday(from: date))
-                                        .font(.caption)
-                                        .foregroundColor(.gray)
-                                    Text(getDayNumber(from: date))
-                                        .fontWeight(.medium)
-                                        .foregroundColor(Calendar.current.isDate(date, inSameDayAs: selectedDate) ? .white : .primary)
-                                        .frame(width: 35, height: 35)
-                                        .background(
-                                            Circle()
-                                                .fill(Calendar.current.isDate(date, inSameDayAs: selectedDate) ? Color.blue : Color.clear)
-                                        )
-                                }
-                                .onTapGesture {
-                                    selectedDate = date
+                HStack {
+                    Spacer()
+                    if !showCalendar {
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 15) {
+                                ForEach(currentWeekDates(), id: \.self) { date in
+                                    VStack {
+                                        Text(getShortWeekday(from: date))
+                                            .font(.caption)
+                                            .foregroundColor(.gray)
+                                        Text(getDayNumber(from: date))
+                                            .fontWeight(.medium)
+                                            .foregroundColor(Calendar.current.isDate(date, inSameDayAs: selectedDate) ? .white : .primary)
+                                            .frame(width: 35, height: 35)
+                                            .background(
+                                                Circle()
+                                                    .fill(Calendar.current.isDate(date, inSameDayAs: selectedDate) ? Color.blue : Color.clear)
+                                            )
+                                    }
+                                    .onTapGesture {
+                                        selectedDate = date
+                                    }
                                 }
                             }
+                            .padding(.horizontal)
                         }
+                    }
+                    
+                    if showCalendar {
+                        DatePicker(
+                            "",
+                            selection: $selectedDate,
+                            displayedComponents: [.date]
+                        )
+                        .datePickerStyle(.graphical)
+                        .labelsHidden()
                         .padding(.horizontal)
                     }
+                    Spacer()
                 }
-                
-                // Full Calendar Picker (Dropdown)
-                if showCalendar {
-                    DatePicker(
-                        "",
-                        selection: $selectedDate,
-                        displayedComponents: [.date]
-                    )
-                    .datePickerStyle(.graphical)
-                    .labelsHidden()
-                    .padding(.horizontal)
-                }
-                Spacer()
             }
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(Color(.systemBackground))
+                    .shadow(color: Color.black.opacity(0.05), radius: 10, x: 0, y: 5)
+            )
+            .padding(.horizontal)
         }
     }
 
@@ -129,7 +135,7 @@ struct HeaderView: View {
 }
 
 #Preview {
-    NavigationStack{
+    NavigationStack {
         HeaderView()
     }
 }
