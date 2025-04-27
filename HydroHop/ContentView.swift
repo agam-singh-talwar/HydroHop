@@ -12,21 +12,11 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
-            CardView(title: "Sip your water", emoji: "💧", time: "25 minutes")
-                .frame(height: selectedCard == 0 ? 200 : 100)
-                .onTapGesture {
-                    withAnimation {
-                        selectedCard = (selectedCard == 0) ? nil : 0
-                    }
-                }
-
-            CardView(title: "Stand up reminder", emoji: "🕺", time: "1 hour")
-                .frame(height: selectedCard == 1 ? 200 : 100)
-                .onTapGesture {
-                    withAnimation {
-                        selectedCard = (selectedCard == 1) ? nil : 1
-                    }
-                }
+            Spacer()
+            CardView(title: "Drink Water", notificationDuration: 45, emoji: "💧", streak: 3)
+            Spacer()
+            CardView(title: "Stand Up", notificationDuration: 30, emoji: "🚶", streak: 9)
+            Spacer()
         }
         .padding()
     }

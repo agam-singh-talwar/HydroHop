@@ -17,7 +17,7 @@ struct HomeView: View {
                 ContentView()
                 Spacer()
                 Spacer()
-            }
+            }.background(Color(.systemGray6)) // Light subtle bg behind the card
         }
     }
 }

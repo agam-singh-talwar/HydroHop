@@ -1,74 +1,86 @@
-//
-//  CardView.swift
-//  HydroHop
-//
-//  Created by Agam Singh Talwar on 2025-04-22.
-//
-
 import SwiftUI
 
 struct CardView: View {
     var title: String
+    var notificationDuration: Int
     var emoji: String
-    var time: String
+    var streak: Int
+    
+    let totalDuration: Double = 60.0
+    
     var body: some View {
-        VStack {
-            HStack {
-                ZStack {
-                    Circle()
-                        .fill(
-                            RadialGradient(
-                                gradient: Gradient(colors: [
-                                    Color.white.opacity(0.9),
-                                    Color.gray.opacity(0.2)
-                                ]),
-                                center: .center,
-                                startRadius: 5,
-                                endRadius: 60
-                            )
-                        )
-                        .overlay(
-                            Circle()
-                                .stroke(Color.gray.opacity(0.4), lineWidth: 2)
-                        )
-                        .frame(width: 70, height: 70)
-                        .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
-
-                    Text(emoji)
-                        .font(.system(size: 28))
-                }
-
-                Text(title)
-                    .font(.headline)
+        VStack(alignment: .leading, spacing: 12) {
+            
+            // Top "Now Playing" style Label
+            HStack(spacing: 6) {
+                Image(systemName: "flame")
+                    .foregroundColor(.pink)
+                
+                Text("\(streak) day streak!")
+                    .font(.subheadline)
                     .fontWeight(.semibold)
-
+                    .foregroundColor(.pink)
+            }
+            .padding(.horizontal)
+            
+            // Main card
+            HStack(spacing: 16) {
+                Button(action: {
+                    print("Emoji tapped")
+                }) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color.gray.opacity(0.2))
+                            .frame(width: 60, height: 60)
+                        
+                        Text(emoji)
+                            .font(.system(size: 30))
+                    }
+                }
+                .buttonStyle(PlainButtonStyle())
+                
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(title)
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                    
+                    Text("💧 \(streak) sips ahead of yesterday!")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+                
                 Spacer()
             }
             .padding(.horizontal)
-
-            HStack {
-                Spacer()
-
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Next notification in:")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-
-                    Text(time)
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                }
-
-                Spacer()
+            
+            // Progress Bar
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Next notification in \(notificationDuration) mins")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                
+                ProgressView(value: progressValue)
+                    .progressViewStyle(LinearProgressViewStyle(tint: .green))
+                    .frame(height: 6)
+                    .clipShape(Capsule())
             }
-            .padding()
+            .padding(.horizontal)
+            .padding(.bottom)
+            
         }
-        .background(.ultraThinMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: 20))
-        .shadow(radius: 10)
+        .padding()
+        .background(Color.white)
+        .cornerRadius(20)
+        .shadow(color: Color.black.opacity(0.1), radius: 10, y: 5)
+        .padding(.horizontal)
+        .background(Color(.systemGray6)) // Light subtle bg behind the card
+    }
+    
+    var progressValue: Double {
+        1.0 - (Double(notificationDuration) / totalDuration)
     }
 }
 
 #Preview {
-    CardView(title: "Sip your water", emoji: "💧", time: "25 minutes")
+    CardView(title: "Drink Water", notificationDuration: 45, emoji: "💧", streak: 3)
 }
