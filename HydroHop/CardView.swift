@@ -42,11 +42,11 @@ struct CardView: View {
                 VStack(alignment: .leading, spacing: 6) {
                     Text(title)
                         .font(.headline)
-                        .foregroundColor(.primary)
+                        .foregroundColor(.primary) // Dynamically adjusts for light/dark mode
                     
                     Text("💧 \(streak) sips ahead of yesterday!")
                         .font(.caption)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(.secondary) // Dynamically adjusts for light/dark mode
                 }
                 
                 Spacer()
@@ -57,7 +57,7 @@ struct CardView: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text("Next notification in \(notificationDuration) mins")
                     .font(.caption)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(.secondary) // Dynamically adjusts for light/dark mode
                 
                 ProgressView(value: progressValue)
                     .progressViewStyle(LinearProgressViewStyle(tint: .green))
@@ -69,7 +69,7 @@ struct CardView: View {
             
         }
         .padding()
-        .background(Color.white)
+        .background(Color(.systemBackground)) // Use system background for light/dark mode
         .cornerRadius(20)
         .shadow(color: Color.black.opacity(0.1), radius: 10, y: 5)
         .padding(.horizontal)

@@ -51,32 +51,32 @@ struct SettingsView: View {
                 Toggle("Vibration", isOn: $vibrationEnabled)
             }
 
-            Section(header: Text("Choose a theme")) {
-                VStack(alignment: .leading, spacing: 10) {
-
-                    LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 16), count: 5), spacing: 16) {
-                        ForEach(accentColors, id: \.hex) { colorOption in
-                            ZStack {
-                                Circle()
-                                    .fill(colorOption.color)
-                                    .frame(width: 36, height: 36)
-                                    .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
-                                    .overlay(
-                                        Circle()
-                                            .stroke(Color.primary.opacity(accentColorHex == colorOption.hex ? 0.7 : 0), lineWidth: 2)
-                                    )
-                                    .scaleEffect(accentColorHex == colorOption.hex ? 1.1 : 1.0)
-                                    .animation(.easeInOut(duration: 0.2), value: accentColorHex)
-                                    .onTapGesture {
-                                        accentColorHex = colorOption.hex
-                                    }
-                            }
-                        }
-                    }
-                    .padding(.vertical, 6)
-                }
-                .padding(.vertical, 5)
-            }
+//            Section(header: Text("Choose a theme")) {
+//                VStack(alignment: .leading, spacing: 10) {
+//
+//                    LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 16), count: 5), spacing: 16) {
+//                        ForEach(accentColors, id: \.hex) { colorOption in
+//                            ZStack {
+//                                Circle()
+//                                    .fill(colorOption.color)
+//                                    .frame(width: 36, height: 36)
+//                                    .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+//                                    .overlay(
+//                                        Circle()
+//                                            .stroke(Color.primary.opacity(accentColorHex == colorOption.hex ? 0.7 : 0), lineWidth: 2)
+//                                    )
+//                                    .scaleEffect(accentColorHex == colorOption.hex ? 1.1 : 1.0)
+//                                    .animation(.easeInOut(duration: 0.2), value: accentColorHex)
+//                                    .onTapGesture {
+//                                        accentColorHex = colorOption.hex
+//                                    }
+//                            }
+//                        }
+//                    }
+//                    .padding(.vertical, 6)
+//                }
+//                .padding(.vertical, 5)
+//            }
 
 
             Section {
