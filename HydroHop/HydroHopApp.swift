@@ -9,9 +9,14 @@ import SwiftUI
 
 @main
 struct HydroHopApp: App {
+    @AppStorage("hasSeenLanding") private var hasSeenLanding: Bool = false
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            if hasSeenLanding {
+                HomeView()
+            } else {
+                LandingView()
+            }
         }
     }
 }

@@ -20,6 +20,7 @@ struct HomeView: View {
             }.background(Color(.systemGray6)) // Light subtle bg behind the card
         }
     }
+        
 }
 
 #Preview {
